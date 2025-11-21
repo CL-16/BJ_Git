@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="root"
+            fx:controller="com.example.blackjackgame117.Controller"
+            prefWidth="1200" prefHeight="720">
+
+    <!-- EXIT GAME BUTTON -->
+    <Button fx:id="exitButton"
+            text="X"
+            layoutX="1200" layoutY="20"
+            prefWidth="40" prefHeight="40"
+            visible="false" managed="false"
+            style="-fx-background-color: red; -fx-font-size: 20px; -fx-font-weight: bold;"
+            onAction="#onExitButtonClick"/>
+
+    <!-- RESULT TEXT -->
+    <Label fx:id="resultText"
+           layoutX="0" layoutY="400"
+           prefWidth="1200"
+           alignment="CENTER"
+           text=""
+           style="-fx-font-size: 40px; -fx-text-fill: gold; -fx-font-weight: bold;"/>
+
+    <!-- PLAYER TOTAL -->
+    <Label fx:id="playerTotal"
+           layoutX="800" layoutY="600"
+           text=" "
+           style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <!-- DEALER TOTAL -->
+    <Label fx:id="dealerTotal"
+           layoutX="800" layoutY="100"
+           text=" "
+           style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <!-- START BUTTON -->
+    <Button fx:id="startButton"
+            text="Start Game"
+            layoutX="530" layoutY="330"
+            visible="false" managed="false"
+            style="-fx-font-size: 24px;
+                   -fx-background-color: gold;
+                   -fx-font-weight: bold;
+                   -fx-effect: dropshadow(gaussian, white, 10, 0.7, 0, 0);
+                   -fx-border-color: gold;
+                   -fx-border-width: 3;"
+            onAction="#onStartButtonClick"/>
+
+    <!-- HIT BUTTON -->
+    <Button fx:id="hitButton"
+            text="Hit"
+            layoutX="200" layoutY="250"
+            prefWidth="200" prefHeight="200"
+            visible="false" managed="false"
+            style="-fx-font-size: 40px;
+               -fx-background-color: lime;
+               -fx-border-color: black;
+               -fx-border-width: 5px;
+               -fx-border-radius: 30px;
+               -fx-background-radius: 35px;"
+            onAction="#onHitButtonClick"/>
+
+    <!-- STAND BUTTON -->
+    <Button fx:id="standButton"
+            text="Stand"
+            layoutX="900" layoutY="250"
+            prefWidth="200" prefHeight="200"
+            visible="false" managed="false"
+            style="-fx-font-size: 40px;
+                   -fx-background-color: orange;
+                   -fx-border-color: black;
+                   -fx-border-width: 6px;
+                   -fx-border-radius: 30px;
+                   -fx-background-radius: 35px;"
+            onAction="#onStandButtonClick"/>
+
+    <!-- CHIP + BET LABELS -->
+    <Label fx:id="chipsLabel"
+           layoutX="50" layoutY="620"
+           text="Chips: 1000"
+           style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Label fx:id="betLabel"
+           layoutX="50" layoutY="660"
+           text="Bet: 0"
+           style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Label fx:id="betHintLabel"
+           text="You may now change your bet..."
+           layoutX="50" layoutY="100"
+           visible="false" managed="false"
+           style="-fx-font-size: 20px; -fx-text-fill: yellow; -fx-font-weight: bold;"/>
+
+    <!-- CHIP BUTTONS -->
+    <Button fx:id="blackChipButton"
+            layoutX="40" layoutY="150"
+            prefWidth="100" prefHeight="100"
+            style="-fx-background-color: transparent;"/>
+
+    <Button fx:id="redChipButton"
+            layoutX="40" layoutY="250"
+            prefWidth="100" prefHeight="100"
+            style="-fx-background-color: transparent;"/>
+
+    <Button fx:id="greenChipButton"
+            layoutX="40" layoutY="350"
+            prefWidth="100" prefHeight="100"
+            style="-fx-background-color: transparent;"/>
+
+    <Button fx:id="blueChipButton"
+            layoutX="40" layoutY="450"
+            prefWidth="100" prefHeight="100"
+            style="-fx-background-color: transparent;"/>
+
+    <!-- RESET BET BUTTON -->
+    <Button fx:id="resetButton"
+            text="Reset"
+            layoutX="50" layoutY="560"
+            prefWidth="140" prefHeight="50"
+            style="-fx-font-size: 20px; -fx-background-color: tomato; -fx-font-weight: bold;"/>
+
+    <!-- FULLSCREEN START OVERLAY (fills root) -->
+    <AnchorPane fx:id="startOverlay"
+                prefWidth="1200" prefHeight="720"
+                style="-fx-background-color: rgba(0, 0, 0, 0.6);"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
+
+        <Button fx:id="bigStartButton"
+                style="-fx-background-color: transparent;"
+                onAction="#onBigStartClick"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
+
+            <graphic>
+                <ImageView preserveRatio="true">
+                    <image>
+                        <Image url="@images/Welcome.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+
+        </Button>
+
+    </AnchorPane>
+
+    <!-- GAME OVER OVERLAY (fills root) -->
+    <AnchorPane fx:id="gameOverOverlay"
+                prefWidth="1200" prefHeight="720"
+                visible="false"
+                style="-fx-background-color: rgba(0, 0, 0, 0.7);"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
+
+        <Button fx:id="gameOverButton"
+                style="-fx-background-color: transparent;"
+                onAction="#onGameOverClick"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
+
+            <graphic>
+                <ImageView preserveRatio="true">
+                    <image>
+                        <Image url="@images/GameOver.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+
+        </Button>
+
+    </AnchorPane>
+
+</AnchorPane>
