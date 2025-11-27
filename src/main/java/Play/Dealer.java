@@ -31,7 +31,6 @@ public class Dealer {
         }
         return total;
     }
-
     public void play(Deck deck) {
         while (calc_total() < 17) {
             take_card(deck.deal_card());

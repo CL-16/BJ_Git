@@ -37,7 +37,7 @@
 
     <!-- DEALER TOTAL -->
     <Label fx:id="dealerTotal"
-           layoutX="800" layoutY="100"
+           layoutX="2000" layoutY="100"
            text=" "
            style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;"/>
 
