@@ -22,14 +22,12 @@ import java.util.List;
 
 public class Controller {
 
-    // UI FROM FXML
     @FXML private Pane root;
     @FXML private Button startButton;
     @FXML private Button hitButton;
     @FXML private Button standButton;
     @FXML private Label resultText;
 
-    // CHIP BETTING BUTTONS
     @FXML private Button redChipButton;
     @FXML private Button greenChipButton;
     @FXML private Button blueChipButton;
@@ -43,7 +41,6 @@ public class Controller {
     @FXML private Label playerTotal;
     @FXML private Label dealerTotal;
 
-    // OVERLAYS
     @FXML private Pane startOverlay;
     @FXML private Button bigStartButton;
 
@@ -51,8 +48,6 @@ public class Controller {
     @FXML private Button gameOverButton;
     @FXML private Label betHintLabel;
 
-
-    // GAME OBJECTS
     private final List<CardView> playerCards = new ArrayList<>();
     private final List<CardView> dealerCards = new ArrayList<>();
 
@@ -60,14 +55,12 @@ public class Controller {
     private Dealer dealer;
     private Player player;
 
-    // PAYMENT SYSTEM
     private Payment payment = new Payment(1000);
     private int currentBet = 0;
 
     @FXML
     public void initialize() {
 
-        // TABLE BACKGROUND
         Image bgImage = new Image(getClass().getResource(
                 "/com/example/blackjackgame117/CardGameTable.png"
         ).toExternalForm());
@@ -88,7 +81,6 @@ public class Controller {
 
         startButton.setDisable(true);
 
-        // CHIP BUTTON IMAGES
         setupChipButton(redChipButton,   Chip.RED,   "/com/example/blackjackgame117/images/red.png");
         setupChipButton(greenChipButton, Chip.GREEN, "/com/example/blackjackgame117/images/green.png");
         setupChipButton(blueChipButton,  Chip.BLUE,  "/com/example/blackjackgame117/images/blue.png");
@@ -98,17 +90,15 @@ public class Controller {
 
         updateLabels();
 
-        // Startup overlay
         startOverlay.toFront();
         startOverlay.setVisible(true);
 
-        // Game over overlay hidden initially
         gameOverOverlay.setVisible(false);
         startButton.setVisible(false);
         startButton.setManaged(false);
     }
 
-    // ---------------- START OVERLAY ----------------
+
 
     @FXML
     private void onBigStartClick() {
@@ -130,8 +120,6 @@ public class Controller {
         fade.play();
     }
 
-    // ---------------- CHIP SYSTEM ----------------
-
     private void setupChipButton(Button button, Chip chip, String path) {
 
         Image img = new Image(getClass().getResourceAsStream(path));
@@ -143,13 +131,11 @@ public class Controller {
         button.setGraphic(iv);
         button.setStyle("-fx-background-color: transparent;");
 
-        // Hover animation
         addHoverAnimation(button);
 
         button.setOnAction(e -> {
             if (payment.addChip(chip)) {
 
-                // NEW: clamp bet so it never exceeds available points
                 payment.clampBet();
 
                 updateLabels();
@@ -171,8 +157,6 @@ public class Controller {
         chipsLabel.setText("Chips: " + payment.getavailibleCoins());
         betLabel.setText("Bet: " + payment.getTotalAmount());
     }
-
-    // ---------------- GAME START ----------------
 
     @FXML
     protected void onStartButtonClick() {
@@ -230,8 +214,6 @@ public class Controller {
         updateTotals();
     }
 
-    // ---------------- GAMEPLAY BUTTONS ----------------
-
     @FXML
     protected void onHitButtonClick() {
         Card card = deck.deal_card();
@@ -264,7 +246,6 @@ public class Controller {
         showResult();
     }
 
-    // ---------------- CARD DISPLAY ----------------
 
     private void addPlayerCard(String name) {
 
@@ -330,7 +311,6 @@ public class Controller {
         addDealerCard(toCardName(dealer.getCard(1)));
     }
 
-    // ---------------- WIN/LOSE LOGIC ----------------
 
     private void showResult() {
         int p = player.calc_total();
@@ -359,7 +339,6 @@ public class Controller {
             payment.pushBet();
         }
 
-        // ⬇⬇ ADD THIS RIGHT HERE ⬇⬇
         payment.clampBet();
 
         resultText.setText(message);
@@ -369,15 +348,12 @@ public class Controller {
         resultText.setText(message);
         updateLabels();
 
-        // GAME OVER CHECK
         if (payment.getavailibleCoins() <= 0) {
 
-            // prepare overlay
             gameOverOverlay.setOpacity(0);
             gameOverOverlay.setVisible(true);
             gameOverOverlay.toFront();
 
-            // fade in animation
             FadeTransition fadeIn = new FadeTransition(Duration.millis(600), gameOverOverlay);
             fadeIn.setFromValue(0.0);
             fadeIn.setToValue(1.0);
@@ -386,15 +362,12 @@ public class Controller {
             return;
         }
 
-
-        // Enable chip betting for the next round
         redChipButton.setDisable(false);
         greenChipButton.setDisable(false);
         blueChipButton.setDisable(false);
         blackChipButton.setDisable(false);
         resetButton.setDisable(false);
 
-        // Play again
         startButton.setText("Play Again");
         startButton.setVisible(true);
         startButton.setManaged(true);
@@ -415,11 +388,9 @@ public class Controller {
 
         fadeOut.setOnFinished(e -> {
 
-            // Hide overlay fully
             gameOverOverlay.setVisible(false);
             gameOverOverlay.setOpacity(1.0);
 
-            // Reset UI
             resultText.setText("");
 
             payment = new Payment(1000);
