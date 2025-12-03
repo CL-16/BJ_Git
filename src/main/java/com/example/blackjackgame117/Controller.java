@@ -161,7 +161,7 @@ public class Controller {
     @FXML
     protected void onStartButtonClick() {
 
-        // Clear previous cards
+
         for (CardView c : playerCards) root.getChildren().remove(c);
         for (CardView c : dealerCards) root.getChildren().remove(c);
         playerCards.clear();
@@ -381,7 +381,7 @@ public class Controller {
     @FXML
     private void onGameOverClick() {
 
-        // Fade out the overlay
+
         FadeTransition fadeOut = new FadeTransition(Duration.millis(600), gameOverOverlay);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
